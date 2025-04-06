@@ -1,16 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Python Code Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 500px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    pre {
+      background-color: #eee;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Python Code Generator</h1>
-    <textarea id="input" placeholder="Describe what code you want"></textarea>
+    <textarea id="input" placeholder="e.g., create a function to find factorial"></textarea>
     <button onclick="generateCode()">Generate Code</button>
     <pre id="output"></pre>
   </div>
-  <script src="script.js"></script>
+
+  <script>
+    function generateCode() {
+      const input = document.getElementById('input').value.toLowerCase();
+      const output = document.getElementById('output');
+
+      let code = "Sorry, I don't know how to generate that yet.";
+
+      if (input.includes("hello world")) {
+        code = `print("Hello, World!")`;
+      } else if (input.includes("factorial")) {
+        code = `def factorial(n):\n  return 1 if n == 0 else n * factorial(n - 1)\n\nprint(factorial(5))`;
+      } else if (input.includes("fibonacci")) {
+        code = `def fibonacci(n):\n  a, b = 0, 1\n  for _ in range(n):\n    print(a, end=" ")\n    a, b = b, a + b\n\nfibonacci(10)`;
+      } else if (input.includes("calculator")) {
+        code = `def add(x, y): return x + y\nprint("Sum:", add(2, 3))`;
+      } else if (input.includes("even") && input.includes("odd")) {
+        code = `num = int(input("Enter a number: "))\nif num % 2 == 0:\n  print("Even")\nelse:\n  print("Odd")`;
+      } else if (input.includes("reverse string")) {
+        code = `s = input("Enter a string: ")\nprint("Reversed:", s[::-1])`;
+      }
+
+      output.textContent = code;
+    }
+  </script>
 </body>
 </html>
