@@ -18,11 +18,12 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
-      width: 500px;
+      width: 600px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
     textarea {
       width: 100%;
@@ -31,9 +32,10 @@
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 15px;
     }
     button {
-      width: 100%;
+      width: 48%;
       padding: 10px;
       background-color: #4CAF50;
       color: white;
@@ -41,24 +43,29 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      margin: 5px 1%;
     }
     button:hover {
       background-color: #45a049;
     }
     pre {
       background-color: #eee;
-      padding: 10px;
+      padding: 15px;
       margin-top: 10px;
       border-radius: 5px;
       white-space: pre-wrap;
+      word-wrap: break-word;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Python Code Generator</h1>
-    <textarea id="input" placeholder="e.g., create a function to find factorial"></textarea>
-    <button onclick="generateCode()">Generate Code</button>
+    <textarea id="input" placeholder="Type a command like 'make factorial function'..."></textarea>
+    <div style="display: flex; justify-content: space-between;">
+      <button onclick="generateCode()">Generate Code</button>
+      <button onclick="copyCode()">Copy Code</button>
+    </div>
     <pre id="output"></pre>
   </div>
 
@@ -76,14 +83,31 @@
       } else if (input.includes("fibonacci")) {
         code = `def fibonacci(n):\n  a, b = 0, 1\n  for _ in range(n):\n    print(a, end=" ")\n    a, b = b, a + b\n\nfibonacci(10)`;
       } else if (input.includes("calculator")) {
-        code = `def add(x, y): return x + y\nprint("Sum:", add(2, 3))`;
+        code = `def add(x, y): return x + y\ndef subtract(x, y): return x - y\ndef multiply(x, y): return x * y\ndef divide(x, y): return x / y\n\nprint("Add:", add(5, 3))`;
       } else if (input.includes("even") && input.includes("odd")) {
         code = `num = int(input("Enter a number: "))\nif num % 2 == 0:\n  print("Even")\nelse:\n  print("Odd")`;
       } else if (input.includes("reverse string")) {
-        code = `s = input("Enter a string: ")\nprint("Reversed:", s[::-1])`;
+        code = `text = input("Enter a string: ")\nprint("Reversed:", text[::-1])`;
+      } else if (input.includes("prime number")) {
+        code = `def is_prime(n):\n  if n <= 1: return False\n  for i in range(2, int(n**0.5)+1):\n    if n % i == 0: return False\n  return True\n\nprint(is_prime(7))`;
+      } else if (input.includes("palindrome")) {
+        code = `text = input("Enter a string: ")\nif text == text[::-1]:\n  print("Palindrome")\nelse:\n  print("Not a palindrome")`;
+      } else if (input.includes("sort list")) {
+        code = `nums = [5, 2, 9, 1, 7]\nnums.sort()\nprint("Sorted:", nums)`;
       }
 
       output.textContent = code;
+    }
+
+    function copyCode() {
+      const output = document.getElementById('output').textContent;
+      if (!output.trim()) {
+        alert("No code to copy!");
+        return;
+      }
+      navigator.clipboard.writeText(output)
+        .then(() => alert("Code copied!"))
+        .catch(err => alert("Failed to copy code."));
     }
   </script>
 </body>
